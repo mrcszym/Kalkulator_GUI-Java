@@ -1,4 +1,7 @@
 import javax.swing.*;
+
+import static java.awt.Color.BLUE;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -22,13 +25,16 @@ public class Kalkulator implements ActionListener {
         frame = new JFrame("Ale fantastyczny kalkulator!");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(420, 550);
-        frame.setLayout(null);
+        frame.setLayout(null); 
+        frame.getContentPane().setBackground(Color.DARK_GRAY);
         // frame.setVisible(true);
 
         textField = new JTextField();
         textField.setBounds(50, 25, 300, 50);
         textField.setFont(myFont);
         textField.setEditable(false);
+        textField.setForeground(Color.WHITE);
+        textField.setBackground(Color.DARK_GRAY);
 
         addButton = new JButton("+");
         subButton = new JButton("-");
@@ -54,22 +60,30 @@ public class Kalkulator implements ActionListener {
             functionButtons[i].addActionListener(this);
             functionButtons[i].setFont(myFont);
             functionButtons[i].setFocusable(false);
+            functionButtons[i].setBackground(Color.LIGHT_GRAY);
+            functionButtons[i].setForeground(Color.BLACK);
         }
         for (int i = 0; i < 10; i++) {
             numberButtons[i] = new JButton(String.valueOf(i));
             numberButtons[i].addActionListener(this);
             numberButtons[i].setFont(myFont);
             numberButtons[i].setFocusable(false);
+            numberButtons[i].setBackground(Color.WHITE);
+            numberButtons[i].setForeground(Color.BLACK);
         }
 
         negButton.setBounds(50, 430, 100, 50);
         delButton.setBounds(150, 430, 100, 50);
+        delButton.setBackground(Color.RED);
+        delButton.setForeground(Color.WHITE);
         clrButton.setBounds(250, 430, 100, 50);
+        equButton.setBackground(Color.GREEN);
+        equButton.setForeground(Color.WHITE);
 
         panel = new JPanel();
         panel.setBounds(50, 100, 300, 300);
         panel.setLayout(new GridLayout(4, 4, 10, 10));
-        // panel.setBackground(Color.GRAY);
+        panel.setBackground(Color.DARK_GRAY);
 
         panel.add(numberButtons[1]);
         panel.add(numberButtons[2]);
