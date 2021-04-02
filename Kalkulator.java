@@ -1,8 +1,9 @@
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
-public class Kalkulator implements ActionListener {
+public class Kalkulator implements ActionListener, KeyListener {
 
     JFrame frame;
     JTextField textField;
@@ -20,16 +21,18 @@ public class Kalkulator implements ActionListener {
     Kalkulator() {
 
         frame = new JFrame(" Prosty kalkulator");
-        //poniżej oczywiście należy zmienić ścieżkę
-        Image icon = Toolkit.getDefaultToolkit().getImage("C:/Source/Repos/Kalkulator-java/Kalkulator/Kalkulator_GUI-Java/img/logo.png"); 
+        // poniżej oczywiście należy zmienić ścieżkę
+        Image icon = Toolkit.getDefaultToolkit()
+                .getImage("C:/Source/Repos/Kalkulator-java/Kalkulator/Kalkulator_GUI-Java/img/logo.png");
         frame.setIconImage(icon);
-        
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(420, 550);
         frame.setLayout(null);
         frame.getContentPane().setBackground(Color.DARK_GRAY);
         frame.setResizable(false);
         frame.getIconImage();
+        frame.addKeyListener(this);
 
         textField = new JTextField();
         textField.setBounds(50, 25, 300, 50);
@@ -118,6 +121,27 @@ public class Kalkulator implements ActionListener {
         Kalkulator kalk = new Kalkulator();
     }
 
+    public static double doingCalc(char operator, double result, double num1, double num2) {
+
+        switch (operator) {
+        case '+':
+            result = num1 + num2;
+            break;
+        case '-':
+            result = num1 - num2;
+            break;
+        case '*':
+            result = num1 * num2;
+            break;
+        case '/':
+            result = num1 / num2;
+            break;
+        }
+        System.out.println("wynik: " + result);
+
+        return result;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -129,44 +153,30 @@ public class Kalkulator implements ActionListener {
         if (e.getSource() == decButton) {
             textField.setText(textField.getText().concat("."));
         }
-        if (e.getSource() == addButton) {
+        else if (e.getSource() == addButton) {
             num1 = Double.parseDouble(textField.getText());
             operator = '+';
             textField.setText("");
         }
-        if (e.getSource() == subButton) {
+        else if (e.getSource() == subButton) {
             num1 = Double.parseDouble(textField.getText());
             operator = '-';
             textField.setText("");
         }
-        if (e.getSource() == mulButton) {
+        else if (e.getSource() == mulButton) {
             num1 = Double.parseDouble(textField.getText());
             operator = '*';
             textField.setText("");
         }
-        if (e.getSource() == divButton) {
+        else if (e.getSource() == divButton) {
             num1 = Double.parseDouble(textField.getText());
             operator = '/';
             textField.setText("");
         }
-        if (e.getSource() == equButton) {
+        else if (e.getSource() == equButton) {
             num2 = Double.parseDouble(textField.getText());
 
-            switch (operator) {
-            case '+':
-                result = num1 + num2;
-                break;
-            case '-':
-                result = num1 - num2;
-                break;
-            case '*':
-                result = num1 * num2;
-                break;
-            case '/':
-                result = num1 / num2;
-                break;
-            }
-            textField.setText(String.valueOf(result));
+            textField.setText(String.valueOf(doingCalc(operator, result, num1, num2)));
             num1 = result;
         }
         if (e.getSource() == clrButton) {
@@ -175,9 +185,9 @@ public class Kalkulator implements ActionListener {
         if (e.getSource() == delButton) {
             String string = textField.getText();
             textField.setText("");
-            for (int i = 0; i < string.length() - 1; i++) {
+            for (int i = 0; i < string.length() - 1; i++)
                 textField.setText(textField.getText() + string.charAt(i));
-            }
+
         }
         if (e.getSource() == negButton) {
             double temp = Double.parseDouble(textField.getText());
@@ -185,4 +195,32 @@ public class Kalkulator implements ActionListener {
             textField.setText(String.valueOf(temp));
         }
     }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // switch(e.getKeyChar()){
+        //     case '+':
+        //         operator = '+';
+        //         break;
+        // }
+        // textField.setText(String.valueOf(doingCalc(operator, result, num1, num2)));
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // // operator = e.getKeyChar();
+        // switch(e.getKeyChar()){
+        //     case '+':
+        //         operator = '+';
+        //         break;
+        // }
+        // textField.setText(String.valueOf(doingCalc(operator, result, num1, num2)));
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+    }
+
 }
