@@ -1,7 +1,4 @@
 import javax.swing.*;
-
-import static java.awt.Color.BLUE;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -22,17 +19,22 @@ public class Kalkulator implements ActionListener {
 
     Kalkulator() {
 
-        frame = new JFrame("Ale fantastyczny kalkulator!");
+        frame = new JFrame(" Prosty kalkulator");
+        //poniżej oczywiście należy zmienić ścieżkę
+        Image icon = Toolkit.getDefaultToolkit().getImage("C:/Source/Repos/Kalkulator-java/Kalkulator/Kalkulator_GUI-Java/img/logo.png"); 
+        frame.setIconImage(icon);
+        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(420, 550);
-        frame.setLayout(null); 
+        frame.setLayout(null);
         frame.getContentPane().setBackground(Color.DARK_GRAY);
-        // frame.setVisible(true);
+        frame.setResizable(false);
+        frame.getIconImage();
 
         textField = new JTextField();
         textField.setBounds(50, 25, 300, 50);
         textField.setFont(myFont);
-        textField.setEditable(false);
+        textField.setEditable(true);
         textField.setForeground(Color.WHITE);
         textField.setBackground(Color.DARK_GRAY);
 
