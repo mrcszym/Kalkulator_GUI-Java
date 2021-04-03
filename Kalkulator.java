@@ -1,5 +1,4 @@
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -20,7 +19,7 @@ public class Kalkulator implements ActionListener, KeyListener {
 
     Kalkulator() {
 
-        frame = new JFrame(" Prosty kalkulator");
+        frame = new JFrame("Prosty kalkulator");
         // poniżej oczywiście należy zmienić ścieżkę
         Image icon = Toolkit.getDefaultToolkit()
                 .getImage("C:/Source/Repos/Kalkulator-java/Kalkulator/Kalkulator_GUI-Java/img/logo.png");
@@ -33,11 +32,14 @@ public class Kalkulator implements ActionListener, KeyListener {
         frame.setResizable(false);
         frame.getIconImage();
         frame.addKeyListener(this);
+        frame.setLocationRelativeTo(null);
+        frame.setFocusable(true);
+        // frame.requestFocusInWindow();
 
         textField = new JTextField();
         textField.setBounds(50, 25, 300, 50);
         textField.setFont(myFont);
-        textField.setEditable(true);
+        textField.setEditable(false);
         textField.setForeground(Color.WHITE);
         textField.setBackground(Color.DARK_GRAY);
 
@@ -137,48 +139,47 @@ public class Kalkulator implements ActionListener, KeyListener {
             result = num1 / num2;
             break;
         }
-        System.out.println("wynik: " + result);
+        System.out.println("--------------------\nwynik: " + result);
 
         return result;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println("ActionEvent (button)");
 
         for (int i = 0; i < 10; i++) {
             if (e.getSource() == numberButtons[i]) {
                 textField.setText(textField.getText().concat(String.valueOf(i)));
             }
         }
+
         if (e.getSource() == decButton) {
             textField.setText(textField.getText().concat("."));
-        }
-        else if (e.getSource() == addButton) {
+        } else if (e.getSource() == addButton) {
             num1 = Double.parseDouble(textField.getText());
             operator = '+';
             textField.setText("");
-        }
-        else if (e.getSource() == subButton) {
+        } else if (e.getSource() == subButton) {
             num1 = Double.parseDouble(textField.getText());
             operator = '-';
             textField.setText("");
-        }
-        else if (e.getSource() == mulButton) {
+        } else if (e.getSource() == mulButton) {
             num1 = Double.parseDouble(textField.getText());
             operator = '*';
             textField.setText("");
-        }
-        else if (e.getSource() == divButton) {
+        } else if (e.getSource() == divButton) {
             num1 = Double.parseDouble(textField.getText());
             operator = '/';
             textField.setText("");
         }
+
         else if (e.getSource() == equButton) {
             num2 = Double.parseDouble(textField.getText());
-
             textField.setText(String.valueOf(doingCalc(operator, result, num1, num2)));
             num1 = result;
         }
+
         if (e.getSource() == clrButton) {
             textField.setText("");
         }
@@ -197,30 +198,64 @@ public class Kalkulator implements ActionListener, KeyListener {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-        // switch(e.getKeyChar()){
-        //     case '+':
-        //         operator = '+';
-        //         break;
-        // }
-        // textField.setText(String.valueOf(doingCalc(operator, result, num1, num2)));
+    public void keyTyped(KeyEvent e) {
+
+        int numKey = e.getKeyChar();
+
+        if (numKey == 10) {
+            System.out.println("keyEvent (equals)");
+            equButton.doClick();
+        } else if (numKey == 8) {
+            System.out.println("keyEvent (del)");
+            delButton.doClick();
+        }
+
+        else if (numKey >= 48 && numKey <= 57) {
+            int number = numKey - 48;
+            System.out.println("keyEvent (number)");
+            numberButtons[number].doClick();
+        }
+
+        else {
+            operator = e.getKeyChar();
+            switch (operator) {
+            case ',':
+                textField.setText(textField.getText().concat("."));
+                break;
+            case '+':
+                num1 = Double.parseDouble(textField.getText());
+                operator = '+';
+                textField.setText("");
+                break;
+            case '-':
+                num1 = Double.parseDouble(textField.getText());
+                operator = '-';
+                textField.setText("");
+                break;
+            case '*':
+                num1 = Double.parseDouble(textField.getText());
+                operator = '*';
+                textField.setText("");
+                break;
+            case '/':
+                num1 = Double.parseDouble(textField.getText());
+                operator = '/';
+                textField.setText("");
+                break;
+            default:
+                System.out.println("wrong key");
+            }
+            System.out.println("keyEvent (operator)");
+        }
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-        // // operator = e.getKeyChar();
-        // switch(e.getKeyChar()){
-        //     case '+':
-        //         operator = '+';
-        //         break;
-        // }
-        // textField.setText(String.valueOf(doingCalc(operator, result, num1, num2)));
-
+    public void keyPressed(KeyEvent e) {
+        // TODO Auto-generated method stub
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         // TODO Auto-generated method stub
     }
-
 }
